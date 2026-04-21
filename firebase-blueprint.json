@@ -1,0 +1,64 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile data including stats and subscription status.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "User ID" },
+        "email": { "type": "string", "description": "User email address" },
+        "displayName": { "type": "string", "description": "User display name" },
+        "photoURL": { "type": "string", "description": "User profile photo URL" },
+        "subscription": { "type": "string", "enum": ["free", "paid"], "description": "Subscription tier" },
+        "freeUploadsUsed": { "type": "number", "description": "Number of free uploads used" },
+        "totalQuizzes": { "type": "number", "description": "Total quizzes taken" },
+        "averageScore": { "type": "number", "description": "Average quiz score" },
+        "level": { "type": "string", "enum": ["Beginner", "Intermediate", "Advanced"], "description": "User level" },
+        "dialect": { "type": "string", "description": "Preferred dialect" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Account creation date" }
+      },
+      "required": ["uid", "subscription", "freeUploadsUsed", "totalQuizzes", "averageScore", "level", "dialect"]
+    },
+    "PastLecture": {
+      "title": "PastLecture",
+      "description": "A lecture uploaded and analyzed by the user.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Lecture ID" },
+        "uid": { "type": "string", "description": "Owner User ID" },
+        "title": { "type": "string", "description": "Lecture title" },
+        "summary": { "type": "string", "description": "Lecture summary" },
+        "date": { "type": "number", "description": "Timestamp of upload" },
+        "analysis": { "type": "object", "description": "Full analysis JSON" }
+      },
+      "required": ["id", "uid", "title", "summary", "date"]
+    },
+    "Feedback": {
+      "title": "Feedback",
+      "description": "User feedback given after reading explanation.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "ID of the user providing the feedback or anonymous" },
+        "lectureTitle": { "type": "string", "description": "Title of the lecture" },
+        "type": { "type": "string", "enum": ["up", "down"], "description": "Thumbs up or down" },
+        "comment": { "type": "string", "description": "Optional user comment" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the feedback was created" }
+      },
+      "required": ["userId", "lectureTitle", "type", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Stores user profiles and stats."
+    },
+    "/users/{userId}/lectures/{lectureId}": {
+      "schema": { "$ref": "#/entities/PastLecture" },
+      "description": "Stores past lectures for a specific user."
+    },
+    "/feedbacks/{feedbackId}": {
+      "schema": { "$ref": "#/entities/Feedback" },
+      "description": "Stores user feedbacks on app explanations."
+    }
+  }
+}
