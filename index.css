@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Sharjah", "Cairo", ui-sans-serif, system-ui, sans-serif;
+}
+
+@font-face {
+  font-family: 'Sharjah';
+  src: url('https://fonts.cdnfonts.com/s/14899/Sharjah.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@layer base {
+  body {
+    font-family: "Sharjah", "Cairo", sans-serif;
+  }
+}
+
+.prose p {
+  line-height: 1.8;
+  margin-bottom: 1.2em;
+}
+
+.prose h1, .prose h2, .prose h3 {
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  font-weight: 700;
+}
+
+.prose ul {
+  list-style-type: disc;
+  padding-right: 1.5em;
+  margin-bottom: 1.2em;
+}
+
+.prose li {
+  margin-bottom: 0.5em;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #explanation-content, #explanation-content * {
+    visibility: visible;
+  }
+  #explanation-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  .no-print {
+    display: none !important;
+  }
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
